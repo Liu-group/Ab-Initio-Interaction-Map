@@ -18,8 +18,29 @@ Mohammad Pabel Kabir, Fang Liu
 
 > Packmol (https://m3g.github.io/packmol/)
 
-> Python 3 or above
+> pyvdwsurface module
 
+## Installation of Requirements
+
+### Step 1: Create a Virtual Environment
+
+Install virtualenv if you don't have it: python2.7 -m pip install virtualenv
+
+Create a virtual environment: python2.7 -m virtualenv vdw_surface
+
+Activate the virtual environment: source vdw_surface/bin/activate
+
+### Step 2: Download and Install pyvdwsurface
+
+Install Cython: python -m pip install cython
+
+Clone the pyvdwsurface repository (optional: you can clone it in any folder): git clone https://github.com/rmcgibbo/pyvdwsurface.git
+
+cd vdw_surface
+
+cd pyvdwsurface
+
+Install pyvdwsurface: python -m pip install .
 
 ## Workflow Description
 
