@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project provides an automated protocol for generating Ab-Initio Interaction Maps (AIIM) using Python and Shell scripting. By following this protocol, users can efficiently compute a 3D interaction map between two molecules from their XYZ coordinates, which is crucial for identifying the sites where the molecules are most likely to interact with each other. The figure represents stepwise workflow for generating AIIM map for BODIPY and TPAB molecules. The blue regions on the Vander Waals surface of BODIPY indicates TPAB molecule most likely to interact with the BODIPY. By following this protocol, one can generate AIIM maps for any two molecules.
+This project provides an automated protocol for generating Ab-Initio Interaction Maps (AIIM) using Python and Shell scripting. By following this protocol, users can efficiently compute a 3D interaction map between two molecules from their XYZ coordinates, which is crucial for identifying the sites where the molecules are most likely to interact with each other. The figure represents the stepwise workflow for generating an AIIM map for BODIPY and TPAB molecules. The blue regions on the van der Waals surface of BODIPY indicate where the TPAB molecule is most likely to interact with BODIPY. By following this protocol, one can generate AIIM maps for any two molecules.
 
 ![Alt text](./image.png)
 
@@ -44,9 +44,9 @@ Install pyvdwsurface: python -m pip install .
 
 ## Workflow Description
 
-### Step 1: Parameter file generation for individual systems
+### Step 1: Parameter File Generation for Individual Systems
 
-Prepare a starting coordinates file (pdb or xyz) for the interested molecues that we would like to generate AIIM. Use antechamber to create AMBER parameter for the two systems and Solvent. Here, we have used an example of BODIPY (system1) and TPAB (system2) molecules in ACN solvent:
+Prepare a starting coordinates file (pdb or xyz) for the molecules for which you would like to generate an AIIM. Use antechamber to create AMBER parameters for the two systems and the solvent. Here, we use the example of BODIPY (system1) and TPAB (system2) molecules in ACN solvent:
 
 antechamber -i system1.pdb -fi pdb -o system1.mol2 -fo mol2 -c bcc -s 2
 
@@ -56,17 +56,17 @@ antechamber -i solvent.pdb -fi pdb -o solvent.mol2 -fo mol2 -c bcc -s 2
 
 Convert the resulting mol2 into an AMBER library file: tleap -f convert.leap
 
-After this, we should have the following files: solvent.frcmod, solvent.prep, solvent.pdb, system1.lib, system1.frcmod, system1.pdb, system2.lib, system2.frcmod, system2.pdb
+After this, you should have the following files: solvent.frcmod, solvent.prep, solvent.pdb, system1.lib, system1.frcmod, system1.pdb, system2.lib, system2.frcmod, system2.pdb
 
-Note: Since, BODIPY and TPAB both molecules have boron (B) atom, the parameter of B atom is not available in Gaff force field, which requires forcefiled fitting. For our case, we did force field fitting to generate the parameter files.
+Note: Since both BODIPY and TPAB molecules contain a boron (B) atom, and the parameter for the B atom is not available in the Gaff force field, force field fitting is required. For our case, we did force field fitting to generate the parameter files.
 
-### Step 2: Solvent Box and parameter generation for whole system
+### Step 2: Solvent Box and Parameter Generation for the Whole System
 
-Generate solvent box coordinates using the packmol.py script, which employs Packmol to place system1, system2, in interested solvent and creates solvated.pdb file:
+Generate solvent box coordinates using the packmol.py script, which employs Packmol to place system1 and system2 in the solvent and creates a solvated.pdb file:
 
 python 1.packmol.py
 
-Generate parameter file for whole system with tleap.sh script, which uses tleap tools and loads parameter files for individual systems and generate parameter file for whole system:
+Generate parameter file for the whole system with the tleap.sh script, which uses tleap tools, loads parameter files for individual systems and generate parameter file for the whole system:
 
 tleap -f 2.tleap.sh
 
@@ -80,7 +80,7 @@ python 3.amber_input.py
 
 ### Step 4: Initial Configuration Generation and Geometry Optimization
 
-Take snapshot every 1ps time interval from the equilibration trajectory file which will be used as guess structrues for ab-initio geomery optimization. 
+Take snapshots every 1ps from the equilibration trajectory file. The snapshots will be used as guess structrues for ab-initio geometry optimization. 
 
 python 4.guess_structrue_optimization.py
 
