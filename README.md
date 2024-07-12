@@ -43,11 +43,11 @@ Note: Since, BODIPY and TPAB both molecules have boron (B) atom, the parameter o
 
 Generate solvent box coordinates using the packmol.py script, which employs Packmol to place system1, system2, in interested solvent and creates solvated.pdb file:
 
-python packmol.py
+python 1.packmol.py
 
 Generate parameter file for whole system with tleap.sh script, which uses tleap tools and loads parameter files for individual systems and generate parameter file for whole system:
 
-tleap -f tleap.sh
+tleap -f 2.tleap.sh
 
 This will generate system.pdb, system.parm, and system.rst files
 
@@ -55,31 +55,31 @@ This will generate system.pdb, system.parm, and system.rst files
 
 Perform system minimization, heating, and equilibration for 100ps.
 
-python amber_input.py
+python 3.amber_input.py
 
 ### Step 4: Initial Configuration Generation and Geometry Optimization
 
 Take snapshot every 1ps time interval from the equilibration trajectory file which will be used as guess structrues for ab-initio geomery optimization. 
 
-python guess_structrue_optimization.py
+python 4.guess_structrue_optimization.py
 
 ### Step 5: Desity Calculation and Normalization
 
-Run 4.data_collection.sh to collect all the data from the expected excited state.
+Calculate center of mass (COM) points of system2 molecule from the optimized geometry, calculate density of the COM points and Normalize.
 
-python make_pdb_from_opt.py
+python 5.make_pdb_from_opt.py
 
-bash align_BDP.sh
+bash 6.align_BDP.sh
 
-python pdb_to_xyz.py
+python 7.pdb_to_xyz.py
 
-bash vdw_surface.sh
+bash 8.vdw_surface.sh
 
 ### Step 6: Generation of .mol2 File and AIIM
 
 Generate mol2 file, which can be opened with a visualization software like VMD.
 
-python generate_mol2.py
+python 9.generate_mol2.py
 
 ## Getting Started
 
