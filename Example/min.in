@@ -1,0 +1,14 @@
+minimize
+&cntrl
+  imin = 1,
+  irest=0,
+  maxcyc = 1000,
+  ncyc = 5000,
+  ntpr = 50,
+  ntx = 1,
+  ntwx = 0,
+  cut = 10.0,
+  igb =0,
+  ntwr = 2000,
+/
+ 

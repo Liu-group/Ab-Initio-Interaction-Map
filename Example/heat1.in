@@ -1,0 +1,39 @@
+&cntrl
+  imin = 0,
+  ntx = 1,
+  irest = 0,
+  ntc = 2,
+  ntf = 2,
+  tol = 0.0000001,
+  cut = 10.0,
+  nstlim = 25000,
+  dt = 5e-05,
+  ntwx = 100,
+  ntwr = 1000,
+  ntt = 3,
+  gamma_ln = 1000.0,
+  ntr = 1,
+  ig = -1,
+  ntpr = 100,
+  nmropt = 1,
+  ntb = 2,
+  taup = 2.0,
+  ioutfm = 1,
+  ntxo = 2,
+  ntp = 2,
+/
+
+&wt type='TEMP0',
+    istep1 = 0,
+    istep2 = 25000,
+    value1 = 0.0,
+    value2 = 100.0
+/
+
+&wt type='END'
+/
+Hold system fixed
+10.0
+RES 1 2
+END
+END

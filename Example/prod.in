@@ -1,0 +1,39 @@
+Umbrella-sampling
+ &cntrl
+  imin=0,
+  ntx=1,
+  irest=0,
+  ntc=2,
+  ntf=2,
+  tol=0.0000001,
+  ntt=3,
+  gamma_ln=1.0,
+  temp0=300.0,
+  ig = -1,
+  ntpr=1000,
+  ntwr=1000,
+  ntwx=1000,
+  nstlim=1000000,
+  dt=0.002,
+  ntb=2,
+  cut=10.0,
+  ioutfm=1,
+  ntxo=2,
+  nmropt=1,
+  ntp=3,
+  csurften=3,
+  gamma_ten=0.0,
+  ninterface=2,
+/
+ &wt type='DUMPFREQ', istep1=500 /
+ &wt type='END', /
+DISANG=COM_prod.RST
+DUMPAVE=dist.dat
+LISTIN=POUT
+LISTOUT=POUT
+/
+/
+ &ewald
+  skinnb=3.0,
+ /
+  
