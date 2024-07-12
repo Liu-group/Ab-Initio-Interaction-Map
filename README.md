@@ -18,68 +18,24 @@ Mohammad Pabel Kabir, Fang Liu
 
 > Packmol (https://m3g.github.io/packmol/)
 
-> WHAM (http://membrane.urmc.rochester.edu/content/wham)
-
-
-## Installation of Requirements
-
-### Step 1: Create a Virtual Environment
-
-Install virtualenv if you don't have it: python2.7 -m pip install virtualenv
-
-Create a virtual environment: python2.7 -m virtualenv vdw_surface
-
-Activate the virtual environment: source vdw_surface/bin/activate
-
-### Step 2: Download and Install pyvdwsurface
-
-Install Cython: python -m pip install cython
-
-Clone the pyvdwsurface repository (optional: you can clone it in any folder): git clone https://github.com/rmcgibbo/pyvdwsurface.git
-
-cd vdw_surface
-
-cd pyvdwsurface
-
-Install pyvdwsurface: python -m pip install .
-
-### Step 3: Install Dependencies
-
-Install NumPy: python -m pip install numpy
-
-Install Matplotlib: python -m pip install matplotlib
 
 ## Workflow Description
 
-### Step 1: Van der Waals (vdW) surface points generation
+### Step 1: Parameter file generation
 
-Place your XYZ coordinate file (Project.xyz) in the same directory as the script (1.vdw_surface.py). The file should be formatted as follows:
+Prepare a starting coordinates file (pdb or xyz) for the interested molecues that we would like to generate AIIM. Use antechamber to create AMBER parameter for the two systems and Solvent. Here, we have used an example of BODIPY and TPAB molecules:
 
-Number of atoms
+antechamber -i system1.pdb -fi pdb -o system1.mol2 -fo mol2 -c bcc -s 2
 
-Comment line
+antechamber -i system2.pdb -fi pdb -o system2.mol2 -fo mol2 -c bcc -s 2
 
-Atom1 x1 y1 z1
+antechamber -i solvent.pdb -fi pdb -o solvent.mol2 -fo mol2 -c bcc -s 2
 
-Atom2 x2 y2 z2
-...
+Convert the resulting mol2 into an AMBER library file: tleap -f convert.leap
 
-Ensure you have the following files in your working directory:
+Note: Since, BODIPY and TPAB both molecules have boron (B) atom, the parameter of B atom is not available in Gaff force field, which requires forcefiled fitting. For our case, we did force field fitting to generate the parameter files.
 
-vdw_surface.py (the main script)
-
-Your XYZ file (e.g., Project.xyz)
-
-Run the script: python 1.vdw_surface.py
-
-The script will generate the points of the surface in two formats:
-
-pointsXx.txt: Contains the points with atomic label Xx.
-
-points.txt: Contains the raw coordinate points on the vdW surface.
-
-
-### Step 2: Gaussian Input Generation
+### Step 2: Solvent Box generation
 
 Prepare a project.com file containing methods, basis sets, and the molecule XYZ (sample input file is given in example directory: project.com).
 
