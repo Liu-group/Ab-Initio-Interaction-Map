@@ -18,12 +18,14 @@ Mohammad Pabel Kabir, Fang Liu
 
 > Packmol (https://m3g.github.io/packmol/)
 
+> Python 3 or above
+
 
 ## Workflow Description
 
-### Step 1: Parameter file generation
+### Step 1: Parameter file generation for individual systems
 
-Prepare a starting coordinates file (pdb or xyz) for the interested molecues that we would like to generate AIIM. Use antechamber to create AMBER parameter for the two systems and Solvent. Here, we have used an example of BODIPY and TPAB molecules:
+Prepare a starting coordinates file (pdb or xyz) for the interested molecues that we would like to generate AIIM. Use antechamber to create AMBER parameter for the two systems and Solvent. Here, we have used an example of BODIPY (system1) and TPAB (system2) molecules in ACN solvent:
 
 antechamber -i system1.pdb -fi pdb -o system1.mol2 -fo mol2 -c bcc -s 2
 
@@ -33,27 +35,51 @@ antechamber -i solvent.pdb -fi pdb -o solvent.mol2 -fo mol2 -c bcc -s 2
 
 Convert the resulting mol2 into an AMBER library file: tleap -f convert.leap
 
+After this, we should have the following files: solvent.frcmod, solvent.prep, solvent.pdb, system1.lib, system1.frcmod, system1.pdb, system2.lib, system2.frcmod, system2.pdb
+
 Note: Since, BODIPY and TPAB both molecules have boron (B) atom, the parameter of B atom is not available in Gaff force field, which requires forcefiled fitting. For our case, we did force field fitting to generate the parameter files.
 
-### Step 2: Solvent Box generation
+### Step 2: Solvent Box and parameter generation for whole system
 
-Prepare a project.com file containing methods, basis sets, and the molecule XYZ (sample input file is given in example directory: project.com).
+Generate solvent box coordinates using the packmol.py script, which employs Packmol to place system1, system2, in interested solvent and creates solvated.pdb file:
 
-Run 2.gaussian_input.sh to generate all the Gaussian input files.
+python packmol.py
 
-### Step 3: Job Submission
+Generate parameter file for whole system with tleap.sh script, which uses tleap tools and loads parameter files for individual systems and generate parameter file for whole system:
 
-Modify the 3.gaussian_sub.sh script based on the total number of .com files.
+tleap -f tleap.sh
 
-Run 3.gaussian_sub.sh to submit all the jobs.
+This will generate system.pdb, system.parm, and system.rst files
 
-### Step 4: Data Collection
+### Step 3: Minimization, Heating and Equilibration
+
+Perform system minimization, heating, and equilibration for 100ps.
+
+python amber_input.py
+
+### Step 4: Initial Configuration Generation and Geometry Optimization
+
+Take snapshot every 1ps time interval from the equilibration trajectory file which will be used as guess structrues for ab-initio geomery optimization. 
+
+python guess_structrue_optimization.py
+
+### Step 5: Desity Calculation and Normalization
 
 Run 4.data_collection.sh to collect all the data from the expected excited state.
 
-### Step 5: Generation of .mol2 File
+python make_pdb_from_opt.py
 
-Run 5.estm.sh to generate a sample.mol2 file, which can be opened with a visualization software like VMD.
+bash align_BDP.sh
+
+python pdb_to_xyz.py
+
+bash vdw_surface.sh
+
+### Step 6: Generation of .mol2 File and AIIM
+
+Generate mol2 file, which can be opened with a visualization software like VMD.
+
+python generate_mol2.py
 
 ## Getting Started
 
