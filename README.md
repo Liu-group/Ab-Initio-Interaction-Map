@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project provides an automated protocol for generating Ab-Initio Interaction Maps (AIIM) using Python and Shell scripting. By following this protocol, users can efficiently compute a 3D interaction map between two molecules from their XYZ coordinates, which is crucial for identifying the sites where the molecules are most likely to interact with each other.
+This project provides an automated protocol for generating Ab-Initio Interaction Maps (AIIM) using Python and Shell scripting. By following this protocol, users can efficiently compute a 3D interaction map between two molecules from their XYZ coordinates, which is crucial for identifying the sites where the molecules are most likely to interact with each other. The figure represents stepwise workflow for generating AIIM map for BODIPY and TPAB molecules. The blue regions on the Vander Waals surface of BODIPY indicates TPAB molecule most likely to interact with the BODIPY. By following this protocol, one can generate AIIM maps for any two molecules.
 
 ![Alt text](./image.png)
 
@@ -16,14 +16,9 @@ Mohammad Pabel Kabir, Fang Liu
 
 > AMBER16 or above 
 
-> NumPy
-
-> Matplotlib
-
 > Packmol (https://m3g.github.io/packmol/)
 
 > WHAM (http://membrane.urmc.rochester.edu/content/wham)
-
 
 
 ## Installation of Requirements
